@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Net.Http;
+extern alias WebProject;
+using System.Net.Http;
+// ... your other imports
 
 namespace PublicApiIntegrationTests;
 
