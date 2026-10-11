@@ -5,11 +5,11 @@ on: [push, workflow_dispatch]
 
 #Environment variables https://docs.github.com/en/actions/learn-github-actions/environment-variables
 env:
-  RESOURCE-GROUP: az2006-rg
+  RESOURCE-GROUP: az2006-rg1
   LOCATION: centralindia
   TEMPLATE-FILE: infra/webapp.bicep
   SUBSCRIPTION-ID: bb091a9c-8fce-46ba-9c3d-104e06a8df0e
-  WEBAPP-NAME: az2006app4644
+  WEBAPP-NAME: az2006app20272
 
 jobs:
   #Build, test and publish .net web project in repository
