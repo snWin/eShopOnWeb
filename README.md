@@ -12,7 +12,7 @@ A list of Frequently Asked Questions about this repository can be found [here](h
 
 ## eBook
 
-This reference application is meant to support the free .PDF download ebook: [Architecting Modern Web Applications with ASP.NET Core and Azure](https://aka.ms/webappebook), updated to **ASP.NET Core 8.0**. [Also available in ePub/mobi formats](https://dotnet.microsoft.com/learn/web/aspnet-architecture).
+This reference application is meant to support the free .PDF download ebook: [Architecting Modern Web Applications with ASP.NET Core and Azure](https://aka.ms/webappebook), updated to **ASP.NET Core 10.0**. [Also available in ePub/mobi formats](https://dotnet.microsoft.com/learn/web/aspnet-architecture).
 
 You can also read the book in online pages at the .NET docs here: 
 https://docs.microsoft.com/dotnet/architecture/modern-web-apps-azure/
@@ -24,7 +24,7 @@ The **eShopOnWeb** sample is related to the [eShopOnContainers](https://github.c
 The goal for this sample is to demonstrate some of the principles and patterns described in the [eBook](https://aka.ms/webappebook). It is not meant to be an eCommerce reference application, and as such it does not implement many features that would be obvious and/or essential to a real eCommerce application.
 
 > ### VERSIONS
-> #### The `main` branch is currently running ASP.NET Core 8.0.
+> #### The `main` branch is currently running ASP.NET Core 10.0.
 > #### Older versions are tagged.
 
 ## Topics (eBook TOC)
@@ -160,6 +160,65 @@ docker-compose up
 You should be able to make requests to localhost:5106 for the Web project, and localhost:5200 for the Public API project once these commands complete. If you have any problems, especially with login, try from a new guest or incognito browser instance.
 
 You can also run the applications by using the instructions located in their `Dockerfile` file in the root of each project. Again, run these commands from the root of the solution (where the .sln file is located).
+
+## Deployment Options
+
+### Kubernetes Deployment
+
+Deploy eShopOnWeb to a Kubernetes cluster using the provided manifests and Kustomize configurations.
+
+**Quick Start:**
+```bash
+# Build and push images
+docker-compose build
+docker tag eshopwebmvc:latest <your-registry>/eshopwebmvc:latest
+docker tag eshoppublicapi:latest <your-registry>/eshoppublicapi:latest
+docker push <your-registry>/eshopwebmvc:latest
+docker push <your-registry>/eshoppublicapi:latest
+
+# Deploy to Kubernetes
+cd deploy/k8s
+kubectl apply -k .
+```
+
+For detailed instructions, environment-specific deployments, and configuration options, see [deploy/k8s/README.md](deploy/k8s/README.md).
+
+**Supported Platforms:**
+- Azure Kubernetes Service (AKS)
+- Amazon Elastic Kubernetes Service (EKS)
+- Google Kubernetes Engine (GKE)
+- On-premises Kubernetes clusters
+
+### Terraform Infrastructure as Code
+
+Provision and manage Azure infrastructure using Terraform, including AKS cluster, networking, and container registry.
+
+**Quick Start:**
+```bash
+cd deploy/terraform
+terraform init
+terraform plan
+terraform apply
+```
+
+For comprehensive documentation on modules, variables, environments, and best practices, see [deploy/terraform/README.md](deploy/terraform/README.md).
+
+**Provisioned Resources:**
+- Azure Kubernetes Service (AKS)
+- Azure Container Registry (ACR)
+- Virtual Network and Subnets
+- Network Security Groups
+- Storage Account
+
+### Azure Bicep Deployment
+
+The repository also includes Azure Bicep templates in the `infra/` directory for provisioning Azure resources such as:
+- Azure App Service
+- Azure Container Instances (ACI)
+- Azure SQL Database
+- Key Vault
+
+See the `infra/` directory for Bicep deployment templates.
 
 ## Community Extensions
 
