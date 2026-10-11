@@ -5,7 +5,6 @@ name: eShopOnWeb Build and Test
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -16,8 +15,5 @@ jobs:
         dotnet-version: '10.0.x'
         dotnet-quality: 'preview'
 
-    - name: Build with dotnet
-      run: dotnet build ./eShopOnWeb.sln --configuration Release
-    
-    - name: Test with dotnet
-      run: dotnet test ./eShopOnWeb.sln --configuration Release
+      - name: Test with dotnet
+        run: dotnet test ./eShopOnWeb.sln --configuration Release
