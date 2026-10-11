@@ -1,4 +1,4 @@
-﻿using System.Net.Mime;
+using System.Net.Mime;
 using Ardalis.ListStartupServices;
 using Azure.Identity;
 using BlazorAdmin;
@@ -99,14 +99,12 @@ builder.Services.Configure<ServiceConfig>(config =>
     config.Path = "/allservices";
 });
 
-// Bind configuration "eShopWeb:Settings" section to the Settings object
-builder.Services.Configure<SettingsViewModel>(builder.Configuration.GetSection("eShopWeb:Settings"));
 // Initialize useAppConfig parameter
 var useAppConfig = false;
 Boolean.TryParse(builder.Configuration["UseAppConfig"], out useAppConfig);
 // Add Azure App Configuration middleware to the container of services.
 builder.Services.AddAzureAppConfiguration();
-builder.Services.AddFeatureManagement();
+
 // Load configuration from Azure App Configuration
 if (useAppConfig)
 {
@@ -132,6 +130,13 @@ if (useAppConfig)
         });
     });
 }
+
+// Add Feature Management AFTER Azure App Configuration is loaded
+builder.Services.AddFeatureManagement();
+
+// Bind configuration "eShopWeb:Settings" section to the Settings object
+// This must be AFTER Azure App Configuration is added so it picks up remote values
+builder.Services.Configure<SettingsViewModel>(builder.Configuration.GetSection("eShopWeb:Settings"));
 
 // blazor configuration
 var configSection = builder.Configuration.GetRequiredSection(BaseUrlConfiguration.CONFIG_NAME);
